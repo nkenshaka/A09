@@ -1,0 +1,55 @@
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class SistemaPessoa {
+    public static void main(String[] args) {
+        JFrame janela = new JFrame("Sistema de Pessoas");
+        janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        JMenuBar barraDeMenu = criarMenu();
+        JLabel rodape = new JLabel("Versão: 12.1.2024  Usuário: denys.silva  Data de acesso: 20/09/2024 10:58");
+
+        janela.setJMenuBar(barraDeMenu);
+        janela.add(rodape, BorderLayout.SOUTH);
+
+        JPanel painel = new JPanel();
+        janela.add(painel, BorderLayout.CENTER);
+
+        janela.pack();
+        janela.setVisible(true);
+    }
+
+    private static JMenuBar criarMenu() {
+        JMenuBar barraDeMenu = new JMenuBar();
+
+        JMenu menuCadastro = new JMenu("Cadastro");
+        JMenuItem itemUsuarios = new JMenuItem("Usuários");
+        JMenuItem itemPessoas = new JMenuItem("Pessoas");
+        menuCadastro.add(itemUsuarios);
+        menuCadastro.add(itemPessoas);
+        barraDeMenu.add(menuCadastro);
+
+        JMenu menuVisualizacao = new JMenu("Visualização");
+        JMenuItem itemListaUsuarios = new JMenuItem("Lista de Usuários");
+        JMenuItem itemListaPessoas = new JMenuItem("Lista de Pessoas");
+        menuVisualizacao.add(itemListaUsuarios);
+        menuVisualizacao.add(itemListaPessoas);
+        barraDeMenu.add(menuVisualizacao);
+
+        JMenu menuSair = new JMenu("Sair");
+        JMenuItem itemSair = new JMenuItem("Sair");
+        menuSair.add(itemSair);
+        barraDeMenu.add(menuSair);
+
+        itemSair.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+
+        return barraDeMenu;
+    }
+}
