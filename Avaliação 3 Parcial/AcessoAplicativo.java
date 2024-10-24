@@ -3,7 +3,6 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.awt.*;
 
-
 public class Aplicativo {
     
     public static void main(String[] args) {
