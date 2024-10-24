@@ -1,82 +1,100 @@
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 
-public class Aplicativo {
-    
+public class Aplicativo extends JFrame {
     public static void main(String[] args) {
-        new VisaoProduto().setVisible(true);
+        new Aplicativo().setVisible(true);
     }
 
-    static class ControladorLogin implements ActionListener {
-        private JTextField txtUsuario;
-        private JTextField txtSenha;
+    public Aplicativo() {
+        setTitle("Sistema de Pessoas");
+        setSize(400, 200);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setLayout(new BorderLayout());
 
-        public ControladorLogin(JTextField txtUsuario, JTextField txtSenha) {
-            this.txtUsuario = txtUsuario;
-            this.txtSenha = txtSenha;
-        }
+        JMenuBar menuBar = criarMenu();
+        setJMenuBar(menuBar);
 
-        public void actionPerformed(ActionEvent e) {
-            if (txtUsuario.getText().equals("") || txtSenha.getText().equals("")) {
-                JOptionPane.showMessageDialog(null, "Campos obrigatórios!");
-                return;
-            }
-            if (txtUsuario.getText().equals("denys.silva") && txtSenha.getText().equals("Teste@2024")) {
-                JOptionPane.showMessageDialog(null, "Sucesso ao fazer o Login!");
-                System.exit(0);
+        JLabel footer = new JLabel("Versão: 12.1.2024  Usuário: denys.silva  Data de acesso: 20/09/2024 10:58");
+        add(footer, BorderLayout.SOUTH);
+
+        JPanel panel = new JPanel();
+        add(panel, BorderLayout.CENTER);
+
+        setVisible(true);
+        abrirTelaLogin();
+    }
+
+    private void abrirTelaLogin() {
+        JFrame frame = new JFrame("Acesso ao Aplicativo");
+        frame.setSize(300, 150);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setLayout(null);
+
+        JLabel userLabel = new JLabel("Usuário:");
+        userLabel.setBounds(10, 20, 80, 25);
+        frame.add(userLabel);
+
+        JTextField userText = new JTextField();
+        userText.setBounds(100, 20, 165, 25);
+        frame.add(userText);
+
+        JLabel passwordLabel = new JLabel("Senha:");
+        passwordLabel.setBounds(10, 50, 80, 25);
+        frame.add(passwordLabel);
+
+        JPasswordField passwordText = new JPasswordField();
+        passwordText.setBounds(100, 50, 165, 25);
+        frame.add(passwordText);
+
+        JButton confirmButton = new JButton("Confirmar");
+        confirmButton.setBounds(10, 80, 100, 25);
+        frame.add(confirmButton);
+
+        JButton cancelButton = new JButton("Cancelar");
+        cancelButton.setBounds(120, 80, 100, 25);
+        frame.add(cancelButton);
+
+        confirmButton.addActionListener(e -> {
+            String username = userText.getText();
+            String password = new String(passwordText.getPassword());
+            if (username.equals("denys.silva") && password.equals("Teste@2024")) {
+                JOptionPane.showMessageDialog(frame, "Acesso confirmado!");
+                frame.dispose();
             } else {
-                JOptionPane.showMessageDialog(null, "Credenciais inválidas!");
+                JOptionPane.showMessageDialog(frame, "Usuário ou senha inválido!");
             }
-        }
+        });
+
+        cancelButton.addActionListener(e -> frame.dispose());
+        frame.setVisible(true);
     }
 
-    static class ControladorSair implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            System.exit(0);
-        }
-    }
+    private JMenuBar criarMenu() {
+        JMenuBar menuBar = new JMenuBar();
+        JMenu cadastroMenu = new JMenu("Cadastro");
+        JMenuItem usuariosItem = new JMenuItem("Usuários");
+        JMenuItem pessoasItem = new JMenuItem("Pessoas");
+        cadastroMenu.add(usuariosItem);
+        cadastroMenu.add(pessoasItem);
+        menuBar.add(cadastroMenu);
 
-    static class VisaoProduto extends JFrame {
-        private static final long serialVersionUID = 1L;
-        
-        private JLabel lblUsuario = new JLabel("Usuário: ");
-        private JTextField txtUsuario = new JTextField();
-        
-        private JLabel lblSenha = new JLabel("Senha: ");
-        private JTextField txtSenha = new JTextField();
+        JMenu visualizacaoMenu = new JMenu("Visualização");
+        JMenuItem listaUsuariosItem = new JMenuItem("Lista de Usuários");
+        JMenuItem listaPessoasItem = new JMenuItem("Lista de Pessoas");
+        visualizacaoMenu.add(listaUsuariosItem);
+        visualizacaoMenu.add(listaPessoasItem);
+        menuBar.add(visualizacaoMenu);
 
-        private JButton btnLogin = new JButton("Login");
-        private JButton btnSair = new JButton("Sair");
-        
-        public VisaoProduto() {
-            setTitle("Acesso ao aplicativo");
-            setSize(400, 200);
-            setDefaultCloseOperation(EXIT_ON_CLOSE);
-            setLocationRelativeTo(null);
-            setLayout(null);
-            
-            lblUsuario.setBounds(10, 10, 200, 20);
-            add(lblUsuario);
-            txtUsuario.setBounds(10, 30, 200, 20);
-            add(txtUsuario);
-            
-            lblSenha.setBounds(10, 60, 200, 20);
-            add(lblSenha);
-            txtSenha.setBounds(10, 80, 200, 20);
-            add(txtSenha);
+        JMenu sairMenu = new JMenu("Sair");
+        JMenuItem sairItem = new JMenuItem("Sair");
+        sairMenu.add(sairItem);
+        menuBar.add(sairMenu);
 
-            btnLogin.setBounds(200, 120, 100, 30);
-            add(btnLogin);
-            btnLogin.addActionListener(new ControladorLogin(txtUsuario, txtSenha));
-
-            btnSair.setBounds(60, 120, 100, 30);
-            add(btnSair);
-            btnSair.addActionListener(new ControladorSair());
-        }
+        sairItem.addActionListener(e -> System.exit(0));
+        return menuBar;
     }
 }
