@@ -21,10 +21,6 @@ public class Aplicativo extends JFrame {
         JLabel footer = new JLabel("Versão: 12.1.2024  Usuário: denys.silva  Data de acesso: 20/09/2024 10:58");
         add(footer, BorderLayout.SOUTH);
 
-        JPanel panel = new JPanel();
-        add(panel, BorderLayout.CENTER);
-
-        setVisible(true);
         abrirTelaLogin();
     }
 
@@ -64,6 +60,7 @@ public class Aplicativo extends JFrame {
             if (username.equals("denys.silva") && password.equals("Teste@2024")) {
                 JOptionPane.showMessageDialog(frame, "Acesso confirmado!");
                 frame.dispose();
+                criarJanelaCadastro();
             } else {
                 JOptionPane.showMessageDialog(frame, "Usuário ou senha inválido!");
             }
@@ -71,6 +68,21 @@ public class Aplicativo extends JFrame {
 
         cancelButton.addActionListener(e -> frame.dispose());
         frame.setVisible(true);
+    }
+
+    private void criarJanelaCadastro() {
+        JFrame frameCadastro = new JFrame("Cadastro de Usuários");
+        frameCadastro.setSize(300, 200);
+        frameCadastro.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frameCadastro.setLayout(new FlowLayout());
+
+        JButton btnSair = new JButton("Sair");
+        btnSair.addActionListener(e -> frameCadastro.dispose());
+
+        frameCadastro.add(new JLabel("Cadastro de Usuários"));
+        frameCadastro.add(btnSair);
+
+        frameCadastro.setVisible(true);
     }
 
     private JMenuBar criarMenu() {
